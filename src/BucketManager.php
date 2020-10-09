@@ -6,14 +6,14 @@ class BucketManager
 {
     protected $buckets = [];
 
-    public function getBucket(string $key): array
+    public function getBucket(string $key): Bucket
     {
         $hash = $this->getBucketHashForKey($key);
 
-        return $this->buckets[$hash] ?? [];
+        return $this->buckets[$hash] ?? new Bucket();
     }
 
-    public function saveBucket(string $key, array $bucket): void
+    public function saveBucket(string $key, Bucket $bucket): void
     {
         $hash = $this->getBucketHashForKey($key);
 

@@ -18,16 +18,12 @@ class FileArray implements \ArrayAccess
 
     public function offsetExists($key)
     {
-        return array_key_exists(
-            $key, $this->bucketManager->getBucket($key)
-        );
+        return isset($this->bucketManager->getBucket($key)[$key]);
     }
 
     public function offsetGet($key)
     {
-        $bucket = $this->bucketManager->getBucket($key);
-
-        return $bucket[$key] ?? null;
+        return $this->bucketManager->getBucket($key)[$key];
     }
 
     public function offsetSet($key, $value)
