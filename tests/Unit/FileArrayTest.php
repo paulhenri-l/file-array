@@ -7,14 +7,31 @@ use PaulhenriL\FileArray\FileArray;
 
 class FileArrayTest extends TestCase
 {
+    /** @var string */
+    protected $tmpDir;
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->tmpDir = __DIR__ . '/../tmp';
+
+        if (!file_exists($this->tmpDir)) {
+            mkdir($this->tmpDir);
+        }
+    }
+
     public function test_construction()
     {
-        $this->assertInstanceOf(FileArray::class, new FileArray());
+        $this->assertInstanceOf(
+            FileArray::class,
+            new FileArray($this->tmpDir)
+        );
     }
 
     public function test_set_get()
     {
-        $array = new FileArray();
+        $array = new FileArray($this->tmpDir);
 
         $array['hello'] = 'world';
 
@@ -23,7 +40,7 @@ class FileArrayTest extends TestCase
 
     public function test_unset()
     {
-        $array = new FileArray();
+        $array = new FileArray($this->tmpDir);
 
         $array['hello'] = 'world';
         unset($array['hello']);
@@ -33,8 +50,8 @@ class FileArrayTest extends TestCase
 
     public function test_has_key()
     {
-        $array1 = new FileArray();
-        $array2 = new FileArray();
+        $array1 = new FileArray($this->tmpDir);
+        $array2 = new FileArray($this->tmpDir);
 
         $array1['hello'] = 'world';
 
@@ -44,8 +61,8 @@ class FileArrayTest extends TestCase
 
     public function test_empty()
     {
-        $array1 = new FileArray();
-        $array2 = new FileArray();
+        $array1 = new FileArray($this->tmpDir);
+        $array2 = new FileArray($this->tmpDir);
 
         $array1['hello'] = null;
 
