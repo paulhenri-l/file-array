@@ -11,4 +11,45 @@ class FileArrayTest extends TestCase
     {
         $this->assertInstanceOf(FileArray::class, new FileArray());
     }
+
+    public function test_set_get()
+    {
+        $array = new FileArray();
+
+        $array['hello'] = 'world';
+
+        $this->assertEquals('world', $array['hello']);
+    }
+
+    public function test_unset()
+    {
+        $array = new FileArray();
+
+        $array['hello'] = 'world';
+        unset($array['hello']);
+
+        $this->assertNull($array['hello']);
+    }
+
+    public function test_has_key()
+    {
+        $array1 = new FileArray();
+        $array2 = new FileArray();
+
+        $array1['hello'] = 'world';
+
+        $this->assertTrue(isset($array1['hello']));
+        $this->assertFalse(isset($array2['hello']));
+    }
+
+    public function test_empty()
+    {
+        $array1 = new FileArray();
+        $array2 = new FileArray();
+
+        $array1['hello'] = null;
+
+        $this->assertTrue(empty($array1['hello']));
+        $this->assertTrue(empty($array2['hello']));
+    }
 }
