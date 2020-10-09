@@ -7,62 +7,45 @@ class FileArray implements \ArrayAccess
     /** @var string */
     protected $filesDirectory;
 
-    protected $buckets = [];
+    /** @var BucketManager */
+    protected $bucketManager;
 
     public function __construct(string $filesDirectory)
     {
         $this->filesDirectory = $filesDirectory;
+        $this->bucketManager = new BucketManager();
     }
 
-    public function offsetExists($offset)
+    public function offsetExists($key)
     {
         return array_key_exists(
-            $offset, $this->getBucketFor($offset)
+            $key, $this->bucketManager->getBucket($key)
         );
     }
 
-    public function offsetGet($offset)
+    public function offsetGet($key)
     {
-        $bucket = $this->getBucketFor($offset);
+        $bucket = $this->bucketManager->getBucket($key);
 
-        return $bucket[$offset] ?? null;
+        return $bucket[$key] ?? null;
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($key, $value)
     {
-        $bucket = $this->getBucketFor($offset);
+        $bucket = $this->bucketManager->getBucket($key);
 
-        $bucket[$offset] = $value;
+        $bucket[$key] = $value;
 
-        $this->saveBucket($offset, $bucket);
+        $this->bucketManager->saveBucket($key, $bucket);
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($key)
     {
-        $bucket = $this->getBucketFor($offset);
+        $bucket = $this->bucketManager->getBucket($key);
 
-        unset($bucket[$offset]);
+        unset($bucket[$key]);
 
         // Should remove it if empty
-        $this->saveBucket($offset, $bucket);
-    }
-
-    protected function getBucketFor(string $key): array
-    {
-        $bucketHash = $this->getBucketHashForKey($key);
-
-        return $this->buckets[$bucketHash] ?? [];
-    }
-
-    protected function saveBucket(string $key, array $bucket): void
-    {
-        $bucketHash = $this->getBucketHashForKey($key);
-
-        $this->buckets[$bucketHash] = $bucket;
-    }
-
-    protected function getBucketHashForKey(string $key): string
-    {
-        return crc32($key) % 10;
+        $this->bucketManager->saveBucket($key, $bucket);
     }
 }
