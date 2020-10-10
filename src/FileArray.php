@@ -13,15 +13,20 @@ class FileArray implements \ArrayAccess
     /** @var int */
     protected $numberOfBuckets;
 
+    /** @var int */
+    protected $numberOfBucketsOpen;
+
     /** @var BucketFactoryInterface */
     protected $bucketFactory;
 
     public function __construct(
         int $numberOfBuckets = 100,
+        int $numberOfBucketsOpen = 100,
         ?BucketFactoryInterface $bucketFactory = null
     ) {
         $this->numberOfBuckets = $numberOfBuckets;
         $this->bucketFactory = $bucketFactory ?? new FileBucketFactory();
+        $this->numberOfBucketsOpen = $numberOfBucketsOpen;
     }
 
     public function offsetExists($offset)
@@ -87,7 +92,7 @@ class FileArray implements \ArrayAccess
         $hash = $this->getBucketHashForKey($key);
 
         // Do not keep too much file pointers open
-        if (count($this->buckets) > 10) {
+        if (count($this->buckets) > $this->numberOfBucketsOpen) {
             $this->buckets = [];
         }
 

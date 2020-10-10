@@ -102,7 +102,7 @@ class FileArrayTest extends TestCase
 
     public function test_bucket_factory_can_be_passed()
     {
-        $bm = new FileArray(100, new FakeBucketFactory());
+        $bm = new FileArray(100, 100, new FakeBucketFactory());
 
         $bm->set('hello', 'world');
 
