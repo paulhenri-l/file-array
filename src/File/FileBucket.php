@@ -1,6 +1,8 @@
 <?php
 
-namespace PaulhenriL\FileArray;
+namespace PaulhenriL\FileArray\File;
+
+use PaulhenriL\FileArray\BucketInterface;
 
 class FileBucket implements BucketInterface
 {

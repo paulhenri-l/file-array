@@ -2,7 +2,7 @@
 
 namespace PaulhenriL\FileArray\Tests\Unit;
 
-use PaulhenriL\FileArray\FileBucket;
+use PaulhenriL\FileArray\File\FileBucket;
 use PaulhenriL\FileArray\Tests\TestCase;
 
 class FileBucketTest extends TestCase

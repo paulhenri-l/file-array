@@ -1,6 +1,9 @@
 <?php
 
-namespace PaulhenriL\FileArray;
+namespace PaulhenriL\FileArray\File;
+
+use PaulhenriL\FileArray\BucketFactoryInterface;
+use PaulhenriL\FileArray\BucketInterface;
 
 class FileBucketFactory implements BucketFactoryInterface
 {

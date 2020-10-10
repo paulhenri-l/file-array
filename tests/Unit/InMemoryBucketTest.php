@@ -2,7 +2,7 @@
 
 namespace PaulhenriL\FileArray\Tests\Unit;
 
-use PaulhenriL\FileArray\InMemoryBucket;
+use PaulhenriL\FileArray\InMemory\InMemoryBucket;
 use PaulhenriL\FileArray\Tests\TestCase;
 
 class InMemoryBucketTest extends TestCase

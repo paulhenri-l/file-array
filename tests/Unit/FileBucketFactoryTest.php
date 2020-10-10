@@ -2,8 +2,8 @@
 
 namespace PaulhenriL\FileArray\Tests\Unit;
 
-use PaulhenriL\FileArray\FileBucket;
-use PaulhenriL\FileArray\FileBucketFactory;
+use PaulhenriL\FileArray\File\FileBucket;
+use PaulhenriL\FileArray\File\FileBucketFactory;
 use PaulhenriL\FileArray\Tests\TestCase;
 
 class FileBucketFactoryTest extends TestCase

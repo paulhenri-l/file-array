@@ -2,6 +2,8 @@
 
 namespace PaulhenriL\FileArray;
 
+use PaulhenriL\FileArray\InMemory\InMemoryBucketFactory;
+
 class BucketManager implements BucketManagerInterface
 {
     protected $buckets = [];

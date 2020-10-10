@@ -1,6 +1,9 @@
 <?php
 
-namespace PaulhenriL\FileArray;
+namespace PaulhenriL\FileArray\InMemory;
+
+use PaulhenriL\FileArray\BucketFactoryInterface;
+use PaulhenriL\FileArray\BucketInterface;
 
 class InMemoryBucketFactory implements BucketFactoryInterface
 {
