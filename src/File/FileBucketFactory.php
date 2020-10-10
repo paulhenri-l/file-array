@@ -19,7 +19,18 @@ class FileBucketFactory implements BucketFactoryInterface
     {
         return new FileBucket(
             $bucketHash,
-            $this->tmpDir ?? sys_get_temp_dir()
+            $this->tmpDir ?? $this->createTempDirectory()
         );
+    }
+
+    protected function createTempDirectory(): string
+    {
+        $tmpDir = sys_get_temp_dir() . '/' . md5(uniqid() . spl_object_hash($this));
+
+        if (!is_dir($tmpDir)) {
+            mkdir($tmpDir);
+        }
+
+        return $this->tmpDir = $tmpDir;
     }
 }

@@ -133,5 +133,15 @@ class FileArrayTest extends TestCase
             $this->assertInstanceOf(FakeBucket::class, $bucket);
         }
     }
+
+    public function test_different_arrays_do_not_use_same_files()
+    {
+        $array1 = new FileArray();
+        $array2 = new FileArray();
+
+        $array1['hello'] = 'world';
+
+        $this->assertNotEquals($array1['hello'], $array2['hello']);
+    }
 }
 

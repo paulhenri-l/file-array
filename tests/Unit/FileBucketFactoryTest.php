@@ -35,4 +35,31 @@ class FileBucketFactoryTest extends TestCase
 
         $this->assertContains($this->tmpDir, $bucket->getUnderlyingFilePath());
     }
+
+    public function test_uniq_id_is_added_to_default_tmp_dir()
+    {
+        $factory = new FileBucketFactory();
+
+        $bucket = $factory->newBucket('bucket_hash');
+        $file = $bucket->getUnderlyingFilePath();
+        $path = explode('/', $file);
+        array_pop($path);
+        $path = implode('/', $path);
+
+        $this->assertNotEquals(sys_get_temp_dir(), $path);
+        $this->assertTrue(is_dir($path));
+    }
+
+    public function test_uniq_id_is_the_same_for_all_buckets()
+    {
+        $factory = new FileBucketFactory();
+
+        $bucket1 = $factory->newBucket('bucket_hash');
+        $bucket2 = $factory->newBucket('bucket_hash');
+
+        $this->assertEquals(
+            $bucket1->getUnderlyingFilePath(),
+            $bucket2->getUnderlyingFilePath()
+        );
+    }
 }

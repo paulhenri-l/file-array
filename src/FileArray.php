@@ -2,7 +2,7 @@
 
 namespace PaulhenriL\FileArray;
 
-use PaulhenriL\FileArray\InMemory\InMemoryBucketFactory;
+use PaulhenriL\FileArray\File\FileBucketFactory;
 use PaulhenriL\FileArray\Interfaces\BucketFactoryInterface;
 use PaulhenriL\FileArray\Interfaces\BucketInterface;
 
@@ -21,7 +21,7 @@ class FileArray implements \ArrayAccess
         ?BucketFactoryInterface $bucketFactory = null
     ) {
         $this->numberOfBuckets = $numberOfBuckets;
-        $this->bucketFactory = $bucketFactory ?? new InMemoryBucketFactory();
+        $this->bucketFactory = $bucketFactory ?? new FileBucketFactory();
     }
 
     public function offsetExists($offset)
