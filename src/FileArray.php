@@ -68,10 +68,6 @@ class FileArray implements \ArrayAccess
         $bucket = $this->getBucketFor($key);
 
         $bucket->unset($key);
-
-        if ($bucket->length() === 0) {
-            $this->removeBucketFor($key);
-        }
     }
 
     public function getBuckets(): array
@@ -90,14 +86,12 @@ class FileArray implements \ArrayAccess
     {
         $hash = $this->getBucketHashForKey($key);
 
+        // Do not keep too much file pointers open
+        if (count($this->buckets) > 10) {
+            $this->buckets = [];
+        }
+
         $this->buckets[$hash] = $bucket;
-    }
-
-    protected function removeBucketFor(string $key)
-    {
-        $hash = $this->getBucketHashForKey($key);
-
-        unset($this->buckets[$hash]);
     }
 
     protected function getBucketHashForKey(string $key): string

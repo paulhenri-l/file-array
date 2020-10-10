@@ -78,15 +78,6 @@ class FileBucketTest extends TestCase
         $this->assertEquals('ph', $bucket->get('hello'));
     }
 
-    public function test_length()
-    {
-        $bucket = $this->newBucket();
-        $bucket->set('hello', 'world');
-        $bucket->set('some_key', 'ph');
-
-        $this->assertEquals(2, $bucket->length());
-    }
-
     protected function newBucket(): FileBucket
     {
         return new FileBucket('bucket_hash', $this->tmpDir);

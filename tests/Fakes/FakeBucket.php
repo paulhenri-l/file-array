@@ -25,9 +25,4 @@ class FakeBucket implements BucketInterface
     {
         //
     }
-
-    public function length(): int
-    {
-        return 0;
-    }
 }

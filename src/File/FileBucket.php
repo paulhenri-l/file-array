@@ -32,7 +32,6 @@ class FileBucket implements BucketInterface
         while ($line = fgetcsv($this->file)) {
             if ($line[0] == $key) {
                 $value = unserialize($line[1]);
-                break;
             }
         }
 
@@ -41,12 +40,6 @@ class FileBucket implements BucketInterface
 
     public function set(string $key, $value): void
     {
-        if ($this->hasKey($key)) {
-            $this->unset($key);
-        }
-
-        // Try rewind
-
         fseek($this->file, 0, SEEK_END);
         fputcsv($this->file, [$key, serialize($value)]);
     }
@@ -66,34 +59,7 @@ class FileBucket implements BucketInterface
 
     public function unset(string $key): void
     {
-        rewind($this->file);
-        $f = fopen(
-            $futureFile = $this->bucketFilePath . '.future', 'c+'
-        );
-
-        while ($line = fgetcsv($this->file)) {
-            if ($line[0] != $key) {
-                fputcsv($f, $line);
-            }
-        }
-
-        fclose($f);
-        fclose($this->file);
-        unlink($this->bucketFilePath);
-        rename($futureFile, $this->bucketFilePath);
-        $this->file = fopen($this->bucketFilePath, 'c+');
-    }
-
-    public function length(): int
-    {
-        $count = 0;
-        rewind($this->file);
-
-        while ($l = fgets($this->file)) {
-            $count++;
-        }
-
-        return $count;
+        $this->set($key, null);
     }
 
     public function __destruct()

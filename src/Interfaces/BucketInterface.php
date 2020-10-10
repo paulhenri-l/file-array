@@ -24,9 +24,4 @@ interface BucketInterface
      * Remove the key value pair from the bucket.
      */
     public function unset(string $key): void;
-
-    /**
-     * Return the number of items present in the bucket.
-     */
-    public function length(): int;
 }
