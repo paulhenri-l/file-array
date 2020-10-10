@@ -2,7 +2,7 @@
 
 namespace PaulhenriL\FileArray;
 
-class Bucket
+class Bucket implements BucketInterface
 {
     /** @var array */
     protected $data = [];

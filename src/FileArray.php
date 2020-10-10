@@ -4,10 +4,10 @@ namespace PaulhenriL\FileArray;
 
 class FileArray implements \ArrayAccess
 {
-    /** @var BucketManager */
+    /** @var BucketManagerInterface */
     protected $bucketManager;
 
-    public function __construct(BucketManager $bucketManager = null)
+    public function __construct(BucketManagerInterface $bucketManager = null)
     {
         $this->bucketManager = $bucketManager ?? new BucketManager();
     }

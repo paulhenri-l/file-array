@@ -2,7 +2,11 @@
 
 namespace PaulhenriL\FileArray\Tests\Unit;
 
+use PaulhenriL\FileArray\BucketInterface;
 use PaulhenriL\FileArray\BucketManager;
+use PaulhenriL\FileArray\BucketManagerInterface;
+use PaulhenriL\FileArray\Tests\Fakes\FakeBucket;
+use PaulhenriL\FileArray\Tests\Fakes\FakeBucketFactory;
 use PaulhenriL\FileArray\Tests\TestCase;
 
 class BucketManagerTest extends TestCase
@@ -79,4 +83,16 @@ class BucketManagerTest extends TestCase
 
         $this->assertCount(1, $bm->getBuckets());
     }
+
+    public function test_bucket_factory_can_be_passed()
+    {
+        $bm = new BucketManager(100, new FakeBucketFactory());
+
+        $bm->set('hello', 'world');
+
+        foreach ($bm->getBuckets() as $bucket) {
+            $this->assertInstanceOf(FakeBucket::class, $bucket);
+        }
+    }
 }
+

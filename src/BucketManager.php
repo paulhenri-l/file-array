@@ -2,16 +2,22 @@
 
 namespace PaulhenriL\FileArray;
 
-class BucketManager
+class BucketManager implements BucketManagerInterface
 {
     protected $buckets = [];
 
     /** @var int */
     protected $numberOfBuckets;
 
-    public function __construct(int $numberOfBuckets = 100)
-    {
+    /** @var BucketFactoryInterface */
+    protected $bucketFactory;
+
+    public function __construct(
+        int $numberOfBuckets = 100,
+        ?BucketFactoryInterface $bucketFactory = null
+    ) {
         $this->numberOfBuckets = $numberOfBuckets;
+        $this->bucketFactory = $bucketFactory ?? new BucketFactory();
     }
 
     public function get(string $key)
@@ -49,14 +55,14 @@ class BucketManager
         return $this->buckets;
     }
 
-    protected function getBucketFor(string $key): Bucket
+    protected function getBucketFor(string $key): BucketInterface
     {
         $hash = $this->getBucketHashForKey($key);
 
-        return $this->buckets[$hash] ?? new Bucket();
+        return $this->buckets[$hash] ?? $this->bucketFactory->newBucket();
     }
 
-    protected function setBucketFor(string $key, Bucket $bucket): void
+    protected function setBucketFor(string $key, BucketInterface $bucket): void
     {
         $hash = $this->getBucketHashForKey($key);
 
