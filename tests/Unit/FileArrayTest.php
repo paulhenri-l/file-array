@@ -2,6 +2,7 @@
 
 namespace PaulhenriL\FileArray\Tests\Unit;
 
+use FilesystemIterator;
 use PaulhenriL\FileArray\File\FileBucketFactory;
 use PaulhenriL\FileArray\FileArray;
 use PaulhenriL\FileArray\Tests\Fakes\FakeBucket;
@@ -126,29 +127,31 @@ class FileArrayTest extends TestCase
     {
         $dir = $this->tmpDir . '/hello';
         mkdir($dir);
+        $fi = new FilesystemIterator($dir, FilesystemIterator::SKIP_DOTS);
         $array = new FileArray(1, 1, new FileBucketFactory($dir));
         $array['hello'] = 'world';
 
-        $this->assertTrue(is_dir($dir));
+        $this->assertEquals(1, iterator_count($fi));
 
         unset($array);
 
-        $this->assertFalse(is_dir($dir));
+        $this->assertEquals(0, iterator_count($fi));
     }
 
     public function test_preventing_cleanup()
     {
         $dir = $this->tmpDir . '/hello';
         mkdir($dir);
+        $fi = new FilesystemIterator($dir, FilesystemIterator::SKIP_DOTS);
         $array = new FileArray(1, 1, new FileBucketFactory($dir));
         $array['hello'] = 'world';
 
-        $this->assertTrue(is_dir($dir));
+        $this->assertEquals(1, iterator_count($fi));
 
         $array->persistent(true);
         unset($array);
 
-        $this->assertTrue(is_dir($dir));
+        $this->assertEquals(1, iterator_count($fi));
     }
 }
 

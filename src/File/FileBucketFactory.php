@@ -37,8 +37,6 @@ class FileBucketFactory implements BucketFactoryInterface
         foreach ($files as $fileinfo) {
             unlink($fileinfo->getRealPath());
         }
-
-        rmdir($this->tmpDir);
     }
 
     protected function createTempDirectory(): string
