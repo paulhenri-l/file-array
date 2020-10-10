@@ -4,6 +4,8 @@ namespace PaulhenriL\FileArray\File;
 
 use PaulhenriL\FileArray\Interfaces\BucketFactoryInterface;
 use PaulhenriL\FileArray\Interfaces\BucketInterface;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 class FileBucketFactory implements BucketFactoryInterface
 {
@@ -21,6 +23,22 @@ class FileBucketFactory implements BucketFactoryInterface
             $bucketHash,
             $this->tmpDir ?? $this->createTempDirectory()
         );
+    }
+
+    public function cleanUpCreatedBuckets(): void
+    {
+        $files = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator(
+                $this->tmpDir, RecursiveDirectoryIterator::SKIP_DOTS
+            ),
+            RecursiveIteratorIterator::CHILD_FIRST
+        );
+
+        foreach ($files as $fileinfo) {
+            unlink($fileinfo->getRealPath());
+        }
+
+        rmdir($this->tmpDir);
     }
 
     protected function createTempDirectory(): string

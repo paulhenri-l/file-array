@@ -11,4 +11,9 @@ class FakeBucketFactory implements BucketFactoryInterface
     {
         return new FakeBucket();
     }
+
+    public function cleanUpCreatedBuckets(): void
+    {
+        //
+    }
 }

@@ -11,4 +11,9 @@ class InMemoryBucketFactory implements BucketFactoryInterface
     {
         return new InMemoryBucket();
     }
+
+    public function cleanUpCreatedBuckets(): void
+    {
+        //
+    }
 }

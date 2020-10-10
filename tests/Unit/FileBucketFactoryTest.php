@@ -2,6 +2,7 @@
 
 namespace PaulhenriL\FileArray\Tests\Unit;
 
+use FilesystemIterator;
 use PaulhenriL\FileArray\File\FileBucket;
 use PaulhenriL\FileArray\File\FileBucketFactory;
 use PaulhenriL\FileArray\Tests\TestCase;
@@ -61,5 +62,22 @@ class FileBucketFactoryTest extends TestCase
             $bucket1->getUnderlyingFilePath(),
             $bucket2->getUnderlyingFilePath()
         );
+    }
+
+    public function test_cleaning_behind_your_buckets()
+    {
+        $factory = new FileBucketFactory();
+        $bucket1 = $factory->newBucket('bucket_hash');
+        $bucket2 = $factory->newBucket('bucket_hash');
+        $bucket1->set('hello', 'world');
+        $bucket2->set('hello', 'world');
+
+        $this->assertFileExists($bucket1->getUnderlyingFilePath());
+        $this->assertFileExists($bucket2->getUnderlyingFilePath());
+
+        $factory->cleanUpCreatedBuckets();
+
+        $this->assertFileNotExists($bucket1->getUnderlyingFilePath());
+        $this->assertFileNotExists($bucket2->getUnderlyingFilePath());
     }
 }

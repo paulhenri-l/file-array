@@ -2,6 +2,7 @@
 
 namespace PaulhenriL\FileArray\Tests\Unit;
 
+use PaulhenriL\FileArray\File\FileBucketFactory;
 use PaulhenriL\FileArray\FileArray;
 use PaulhenriL\FileArray\Tests\Fakes\FakeBucket;
 use PaulhenriL\FileArray\Tests\Fakes\FakeBucketFactory;
@@ -119,6 +120,35 @@ class FileArrayTest extends TestCase
         $array1['hello'] = 'world';
 
         $this->assertNotEquals($array1['hello'], $array2['hello']);
+    }
+
+    public function test_cleanup_is_called_when_the_object_is_destroyed()
+    {
+        $dir = $this->tmpDir . '/hello';
+        mkdir($dir);
+        $array = new FileArray(1, 1, new FileBucketFactory($dir));
+        $array['hello'] = 'world';
+
+        $this->assertTrue(is_dir($dir));
+
+        unset($array);
+
+        $this->assertFalse(is_dir($dir));
+    }
+
+    public function test_preventing_cleanup()
+    {
+        $dir = $this->tmpDir . '/hello';
+        mkdir($dir);
+        $array = new FileArray(1, 1, new FileBucketFactory($dir));
+        $array['hello'] = 'world';
+
+        $this->assertTrue(is_dir($dir));
+
+        $array->persistent(true);
+        unset($array);
+
+        $this->assertTrue(is_dir($dir));
     }
 }
 

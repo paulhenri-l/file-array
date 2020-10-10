@@ -8,7 +8,11 @@ use PaulhenriL\FileArray\Interfaces\BucketInterface;
 
 class FileArray implements \ArrayAccess
 {
+    /** @var array */
     protected $buckets = [];
+
+    /** @var bool */
+    protected $persistent = false;
 
     /** @var int */
     protected $numberOfBuckets;
@@ -80,6 +84,11 @@ class FileArray implements \ArrayAccess
         return $this->buckets;
     }
 
+    public function persistent(bool $true)
+    {
+        $this->persistent = $true;
+    }
+
     protected function getBucketFor(string $key): BucketInterface
     {
         $hash = $this->getBucketHashForKey($key);
@@ -102,5 +111,12 @@ class FileArray implements \ArrayAccess
     protected function getBucketHashForKey(string $key): string
     {
         return crc32($key) % $this->numberOfBuckets;
+    }
+
+    public function __destruct()
+    {
+        if (!$this->persistent) {
+            $this->bucketFactory->cleanUpCreatedBuckets();
+        }
     }
 }
