@@ -7,7 +7,7 @@ use PaulhenriL\FileArray\Interfaces\BucketFactoryInterface;
 use PaulhenriL\FileArray\Interfaces\BucketInterface;
 use PaulhenriL\FileArray\Interfaces\BucketManagerInterface;
 
-class BucketManager implements BucketManagerInterface
+class BucketManager implements BucketManagerInterface, \ArrayAccess
 {
     protected $buckets = [];
 
@@ -23,6 +23,26 @@ class BucketManager implements BucketManagerInterface
     ) {
         $this->numberOfBuckets = $numberOfBuckets;
         $this->bucketFactory = $bucketFactory ?? new InMemoryBucketFactory();
+    }
+
+    public function offsetExists($offset)
+    {
+        return $this->hasKey($offset);
+    }
+
+    public function offsetGet($offset)
+    {
+        return $this->get($offset);
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        $this->set($offset, $value);
+    }
+
+    public function offsetUnset($offset)
+    {
+        $this->unset($offset);
     }
 
     public function get(string $key)

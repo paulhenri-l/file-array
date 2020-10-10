@@ -2,15 +2,55 @@
 
 namespace PaulhenriL\FileArray\Tests\Unit;
 
-use PaulhenriL\FileArray\Interfaces\BucketInterface;
 use PaulhenriL\FileArray\BucketManager;
-use PaulhenriL\FileArray\Interfaces\BucketManagerInterface;
+use PaulhenriL\FileArray\FileArray;
 use PaulhenriL\FileArray\Tests\Fakes\FakeBucket;
 use PaulhenriL\FileArray\Tests\Fakes\FakeBucketFactory;
 use PaulhenriL\FileArray\Tests\TestCase;
 
 class BucketManagerTest extends TestCase
 {
+    public function test_set_get_array_access()
+    {
+        $array = new BucketManager();
+
+        $array['hello'] = 'world';
+
+        $this->assertEquals('world', $array['hello']);
+    }
+
+    public function test_unset_array_access()
+    {
+        $array = new BucketManager();
+
+        $array['hello'] = 'world';
+        unset($array['hello']);
+
+        $this->assertNull($array['hello']);
+    }
+
+    public function test_has_key_array_access()
+    {
+        $array1 = new BucketManager();
+        $array2 = new BucketManager();
+
+        $array1['hello'] = 'world';
+
+        $this->assertTrue(isset($array1['hello']));
+        $this->assertFalse(isset($array2['hello']));
+    }
+
+    public function test_empty_array_access()
+    {
+        $array1 = new BucketManager();
+        $array2 = new BucketManager();
+
+        $array1['hello'] = null;
+
+        $this->assertTrue(empty($array1['hello']));
+        $this->assertTrue(empty($array2['hello']));
+    }
+
     public function test_get_defaults_to_false()
     {
         $bm = new BucketManager();
