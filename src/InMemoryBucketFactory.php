@@ -2,10 +2,10 @@
 
 namespace PaulhenriL\FileArray;
 
-class BucketFactory implements BucketFactoryInterface
+class InMemoryBucketFactory implements BucketFactoryInterface
 {
     public function newBucket(): BucketInterface
     {
-        return new Bucket();
+        return new InMemoryBucket();
     }
 }

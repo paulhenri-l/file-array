@@ -17,7 +17,7 @@ class BucketManager implements BucketManagerInterface
         ?BucketFactoryInterface $bucketFactory = null
     ) {
         $this->numberOfBuckets = $numberOfBuckets;
-        $this->bucketFactory = $bucketFactory ?? new BucketFactory();
+        $this->bucketFactory = $bucketFactory ?? new InMemoryBucketFactory();
     }
 
     public function get(string $key)
