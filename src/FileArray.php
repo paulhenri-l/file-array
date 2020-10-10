@@ -4,44 +4,31 @@ namespace PaulhenriL\FileArray;
 
 class FileArray implements \ArrayAccess
 {
-    /** @var string */
-    protected $filesDirectory;
-
     /** @var BucketManager */
     protected $bucketManager;
 
-    public function __construct(string $filesDirectory)
+    public function __construct(BucketManager $bucketManager = null)
     {
-        $this->filesDirectory = $filesDirectory;
-        $this->bucketManager = new BucketManager();
+        $this->bucketManager = $bucketManager ?? new BucketManager();
     }
 
     public function offsetExists($key)
     {
-        return isset($this->bucketManager->getBucket($key)[$key]);
+        return $this->bucketManager->hasKey($key);
     }
 
     public function offsetGet($key)
     {
-        return $this->bucketManager->getBucket($key)[$key];
+        return $this->bucketManager->get($key);
     }
 
     public function offsetSet($key, $value)
     {
-        $bucket = $this->bucketManager->getBucket($key);
-
-        $bucket[$key] = $value;
-
-        $this->bucketManager->saveBucket($key, $bucket);
+        $this->bucketManager->set($key, $value);
     }
 
     public function offsetUnset($key)
     {
-        $bucket = $this->bucketManager->getBucket($key);
-
-        unset($bucket[$key]);
-
-        // Should remove it if empty
-        $this->bucketManager->saveBucket($key, $bucket);
+        $this->bucketManager->unset($key);
     }
 }

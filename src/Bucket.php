@@ -2,7 +2,7 @@
 
 namespace PaulhenriL\FileArray;
 
-class Bucket implements \ArrayAccess
+class Bucket
 {
     /** @var array */
     protected $data = [];
@@ -12,28 +12,18 @@ class Bucket implements \ArrayAccess
         return $this->data[$key] ?? null;
     }
 
-    public function set(string $key, string $value): void
+    public function set(string $key, $value): void
     {
         $this->data[$key] = $value;
     }
 
-    public function offsetExists($offset)
+    public function hasKey(string $key): bool
     {
-        return array_key_exists($offset, $this->data);
+        return array_key_exists($key, $this->data);
     }
 
-    public function offsetGet($offset)
+    public function unset(string $key): void
     {
-        return $this->data[$offset] ?? null;
-    }
-
-    public function offsetSet($offset, $value)
-    {
-        $this->data[$offset] = $value;
-    }
-
-    public function offsetUnset($offset)
-    {
-        unset($this->data[$offset]);
+        unset($this->data[$key]);
     }
 }

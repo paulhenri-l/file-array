@@ -23,49 +23,29 @@ class BucketTest extends TestCase
         $this->assertEquals('world', $bucket->get('hello'));
     }
 
-    public function test_construction()
-    {
-        $this->assertInstanceOf(Bucket::class, new Bucket());
-    }
-
-    public function test_set_get()
+    public function test_has_key_when_no_key()
     {
         $bucket = new Bucket();
 
-        $bucket['hello'] = 'world';
+        $this->assertFalse($bucket->hasKey('some_key'));
+    }
 
-        $this->assertEquals('world', $bucket['hello']);
+    public function test_has_key_when_has_key()
+    {
+        $bucket = new Bucket();
+
+        $bucket->set('some_key', []);
+
+        $this->assertTrue($bucket->hasKey('some_key'));
     }
 
     public function test_unset()
     {
         $bucket = new Bucket();
+        $bucket->set('some_key', ['some' => 'value']);
 
-        $bucket['hello'] = 'world';
-        unset($bucket['hello']);
+        $bucket->unset('some_key');
 
-        $this->assertNull($bucket['hello']);
-    }
-
-    public function test_has_key()
-    {
-        $bucket1 = new Bucket();
-        $bucket2 = new Bucket();
-
-        $bucket1['hello'] = 'world';
-
-        $this->assertTrue(isset($bucket1['hello']));
-        $this->assertFalse(isset($bucket2['hello']));
-    }
-
-    public function test_empty()
-    {
-        $bucket1 = new Bucket();
-        $bucket2 = new Bucket();
-
-        $bucket1['hello'] = null;
-
-        $this->assertTrue(empty($bucket1['hello']));
-        $this->assertTrue(empty($bucket2['hello']));
+        $this->assertNull($bucket->get('some_key'));
     }
 }
