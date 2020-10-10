@@ -16,9 +16,7 @@ class BucketManager
 
     public function get(string $key)
     {
-        $bucket = $this->getBucketFor($key);
-
-        return $bucket->get($key);
+        return $this->getBucketFor($key)->get($key);
     }
 
     public function set(string $key, $value): void
