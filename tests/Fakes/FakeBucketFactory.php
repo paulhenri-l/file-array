@@ -2,8 +2,8 @@
 
 namespace PaulhenriL\FileArray\Tests\Fakes;
 
-use PaulhenriL\FileArray\BucketFactoryInterface;
-use PaulhenriL\FileArray\BucketInterface;
+use PaulhenriL\FileArray\Interfaces\BucketFactoryInterface;
+use PaulhenriL\FileArray\Interfaces\BucketInterface;
 
 class FakeBucketFactory implements BucketFactoryInterface
 {

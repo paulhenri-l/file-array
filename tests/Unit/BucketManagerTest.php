@@ -2,9 +2,9 @@
 
 namespace PaulhenriL\FileArray\Tests\Unit;
 
-use PaulhenriL\FileArray\BucketInterface;
+use PaulhenriL\FileArray\Interfaces\BucketInterface;
 use PaulhenriL\FileArray\BucketManager;
-use PaulhenriL\FileArray\BucketManagerInterface;
+use PaulhenriL\FileArray\Interfaces\BucketManagerInterface;
 use PaulhenriL\FileArray\Tests\Fakes\FakeBucket;
 use PaulhenriL\FileArray\Tests\Fakes\FakeBucketFactory;
 use PaulhenriL\FileArray\Tests\TestCase;

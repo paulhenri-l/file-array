@@ -3,6 +3,9 @@
 namespace PaulhenriL\FileArray;
 
 use PaulhenriL\FileArray\InMemory\InMemoryBucketFactory;
+use PaulhenriL\FileArray\Interfaces\BucketFactoryInterface;
+use PaulhenriL\FileArray\Interfaces\BucketInterface;
+use PaulhenriL\FileArray\Interfaces\BucketManagerInterface;
 
 class BucketManager implements BucketManagerInterface
 {

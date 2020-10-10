@@ -2,7 +2,7 @@
 
 namespace PaulhenriL\FileArray\InMemory;
 
-use PaulhenriL\FileArray\BucketInterface;
+use PaulhenriL\FileArray\Interfaces\BucketInterface;
 
 class InMemoryBucket implements BucketInterface
 {

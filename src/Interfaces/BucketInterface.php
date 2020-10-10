@@ -1,6 +1,6 @@
 <?php
 
-namespace PaulhenriL\FileArray;
+namespace PaulhenriL\FileArray\Interfaces;
 
 interface BucketInterface
 {

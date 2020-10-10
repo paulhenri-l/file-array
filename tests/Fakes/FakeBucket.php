@@ -2,7 +2,7 @@
 
 namespace PaulhenriL\FileArray\Tests\Fakes;
 
-use PaulhenriL\FileArray\BucketInterface;
+use PaulhenriL\FileArray\Interfaces\BucketInterface;
 
 class FakeBucket implements BucketInterface
 {

@@ -2,7 +2,7 @@
 
 namespace PaulhenriL\FileArray\File;
 
-use PaulhenriL\FileArray\BucketInterface;
+use PaulhenriL\FileArray\Interfaces\BucketInterface;
 
 class FileBucket implements BucketInterface
 {

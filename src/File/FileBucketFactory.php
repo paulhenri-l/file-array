@@ -2,8 +2,8 @@
 
 namespace PaulhenriL\FileArray\File;
 
-use PaulhenriL\FileArray\BucketFactoryInterface;
-use PaulhenriL\FileArray\BucketInterface;
+use PaulhenriL\FileArray\Interfaces\BucketFactoryInterface;
+use PaulhenriL\FileArray\Interfaces\BucketInterface;
 
 class FileBucketFactory implements BucketFactoryInterface
 {

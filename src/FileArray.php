@@ -2,6 +2,8 @@
 
 namespace PaulhenriL\FileArray;
 
+use PaulhenriL\FileArray\Interfaces\BucketManagerInterface;
+
 class FileArray implements \ArrayAccess
 {
     /** @var BucketManagerInterface */
