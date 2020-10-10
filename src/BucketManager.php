@@ -59,7 +59,7 @@ class BucketManager implements BucketManagerInterface
     {
         $hash = $this->getBucketHashForKey($key);
 
-        return $this->buckets[$hash] ?? $this->bucketFactory->newBucket();
+        return $this->buckets[$hash] ?? $this->bucketFactory->newBucket($hash);
     }
 
     protected function setBucketFor(string $key, BucketInterface $bucket): void

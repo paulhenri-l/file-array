@@ -4,5 +4,5 @@ namespace PaulhenriL\FileArray;
 
 interface BucketFactoryInterface
 {
-    public function newBucket(): BucketInterface;
+    public function newBucket(string $bucketHash): BucketInterface;
 }

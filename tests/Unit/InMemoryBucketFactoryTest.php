@@ -12,6 +12,9 @@ class InMemoryBucketFactoryTest extends TestCase
     {
         $factory = new InMemoryBucketFactory();
 
-        $this->assertInstanceOf(InMemoryBucket::class, $factory->newBucket());
+        $this->assertInstanceOf(
+            InMemoryBucket::class,
+            $factory->newBucket('bucket_hash')
+        );
     }
 }
