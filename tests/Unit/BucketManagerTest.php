@@ -48,4 +48,35 @@ class BucketManagerTest extends TestCase
 
         $this->assertNull($bm->get('some_key'));
     }
+
+    public function test_bucket_is_removed_on_unset_if_it_is_empty()
+    {
+        $bm = new BucketManager();
+        $bm->set('some_key', 'some_value');
+        $this->assertCount(1, $bm->getBuckets());
+
+        $bm->unset('some_key');
+
+        $this->assertCount(0, $bm->getBuckets());
+    }
+
+    public function test_bucket_is_not_removed_on_unset_if_it_is_not_empty()
+    {
+        $bm = new BucketManager(1);
+        $bm->set('some_key1', 'some_value1');
+        $bm->set('some_key2', 'some_value2');
+        $this->assertCount(1, $bm->getBuckets());
+
+        $bm->unset('some_key1');
+
+        $this->assertCount(1, $bm->getBuckets());
+    }
+
+    public function test_get_underlying_buckets()
+    {
+        $bm = new BucketManager();
+        $bm->set('hello', 'world');
+
+        $this->assertCount(1, $bm->getBuckets());
+    }
 }

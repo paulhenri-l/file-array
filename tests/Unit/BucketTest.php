@@ -48,4 +48,15 @@ class BucketTest extends TestCase
 
         $this->assertNull($bucket->get('some_key'));
     }
+
+    public function test_length()
+    {
+        $bucket = new Bucket();
+
+        $this->assertEquals(0, $bucket->length());
+
+        $bucket->set('hello', 'world');
+
+        $this->assertEquals(1, $bucket->length());
+    }
 }

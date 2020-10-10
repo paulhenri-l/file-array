@@ -6,6 +6,14 @@ class BucketManager
 {
     protected $buckets = [];
 
+    /** @var int */
+    protected $numberOfBuckets;
+
+    public function __construct(int $numberOfBuckets = 100)
+    {
+        $this->numberOfBuckets = $numberOfBuckets;
+    }
+
     public function get(string $key)
     {
         $bucket = $this->getBucketFor($key);
@@ -29,8 +37,18 @@ class BucketManager
 
     public function unset(string $key): void
     {
-        // Should drop bucket if it is empty now.
-        $this->getBucketFor($key)->unset($key);
+        $bucket = $this->getBucketFor($key);
+
+        $bucket->unset($key);
+
+        if ($bucket->length() === 0) {
+            $this->removeBucketFor($key);
+        }
+    }
+
+    public function getBuckets(): array
+    {
+        return $this->buckets;
     }
 
     protected function getBucketFor(string $key): Bucket
@@ -47,8 +65,15 @@ class BucketManager
         $this->buckets[$hash] = $bucket;
     }
 
+    protected function removeBucketFor(string $key)
+    {
+        $hash = $this->getBucketHashForKey($key);
+
+        unset($this->buckets[$hash]);
+    }
+
     protected function getBucketHashForKey(string $key): string
     {
-        return crc32($key) % 10;
+        return crc32($key) % $this->numberOfBuckets;
     }
 }

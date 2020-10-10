@@ -26,4 +26,9 @@ class Bucket
     {
         unset($this->data[$key]);
     }
+
+    public function length(): int
+    {
+        return count($this->data);
+    }
 }
