@@ -6,7 +6,7 @@ use PaulhenriL\FileArray\InMemoryBucket;
 use PaulhenriL\FileArray\InMemoryBucketFactory;
 use PaulhenriL\FileArray\Tests\TestCase;
 
-class BucketFactoryTest extends TestCase
+class InMemoryBucketFactoryTest extends TestCase
 {
     public function test_a_bucket_can_be_created()
     {
