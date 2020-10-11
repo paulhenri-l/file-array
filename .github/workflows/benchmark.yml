@@ -1,4 +1,4 @@
-name: Tests
+name: Benchmark
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  test:
+  benchmark:
     name: PHP ${{ matrix.php-versions }}
     runs-on: ubuntu-latest
 
