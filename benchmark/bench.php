@@ -43,20 +43,12 @@ $tests = [
         'pointers' => 100,
     ],
     [
-        'buckets' => 1000,
-        'pointers' => 500,
-    ],
-    [
-        'buckets' => 1000,
-        'pointers' => 1000,
-    ],
-    [
         'buckets' => 10000,
-        'pointers' => 1000,
+        'pointers' => 100,
     ],
     [
         'buckets' => 100000,
-        'pointers' => 1000,
+        'pointers' => 100,
     ],
 ];
 
