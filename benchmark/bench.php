@@ -11,7 +11,7 @@ $data = fopen($testDataPath = __DIR__ . '/test_data.csv', 'w+');
 $hmDir = __DIR__ . '/h_map';
 mkdir($hmDir);
 
-echo " - Generating test data" . PHP_EOL;
+echo " - Generating test data (1 million lines)" . PHP_EOL;
 
 for ($i = 0; $i < 1000000; $i++) {
     fputcsv($data, [md5($i)]);
@@ -47,8 +47,16 @@ $tests = [
         'pointers' => 500,
     ],
     [
+        'buckets' => 1000,
+        'pointers' => 1000,
+    ],
+    [
+        'buckets' => 10000,
+        'pointers' => 1000,
+    ],
+    [
         'buckets' => 100000,
-        'pointers' => 100,
+        'pointers' => 1000,
     ],
 ];
 
@@ -91,7 +99,7 @@ foreach ($tests as $test) {
         $durations = $lookupDuration;
     }
 
-    echo "  lookup duration: " . number_format((($durations*1000000) / $count), 4) . 'μs' . PHP_EOL . PHP_EOL;
+    echo "  lookup duration: " . number_format((($durations*1000) / $count), 4) . 'ms' . PHP_EOL . PHP_EOL;
 
     unset($hm);
 }
