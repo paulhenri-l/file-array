@@ -14,14 +14,13 @@ class FileBucketFactory implements BucketFactoryInterface
 
     public function __construct(string $tmpDir = null)
     {
-        $this->tmpDir = $tmpDir;
+        $this->tmpDir = $tmpDir ?? $this->createTempDirectory();
     }
 
     public function newBucket(string $bucketHash): BucketInterface
     {
         return new FileBucket(
-            $bucketHash,
-            $this->tmpDir ?? $this->createTempDirectory()
+            $bucketHash, $this->tmpDir
         );
     }
 
@@ -41,12 +40,12 @@ class FileBucketFactory implements BucketFactoryInterface
 
     protected function createTempDirectory(): string
     {
-        $tmpDir = sys_get_temp_dir() . '/' . md5(uniqid() . spl_object_hash($this));
+        $tmpDir = sys_get_temp_dir() . '/' . md5(uniqid(true) . spl_object_hash($this));
 
         if (!is_dir($tmpDir)) {
             mkdir($tmpDir);
         }
 
-        return $this->tmpDir = $tmpDir;
+        return $tmpDir;
     }
 }
